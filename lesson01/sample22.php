@@ -7,3 +7,4 @@ if(is_numeric($age)) {
 } else {
   echo '※数字で入力してください';
 }
+?>

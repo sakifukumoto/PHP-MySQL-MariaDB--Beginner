@@ -29,5 +29,9 @@
     }
   ?>
 </body>
-<div><?php echo htmlspecialchars($memo); ?></div>
+<div><pre><?php echo htmlspecialchars($memo); ?></pre></div>
+
+<p>
+  <a href="update.php?id=<?php echo $id; ?>">編集する</a> | <a href="/PHP+MySQL(MariaDB)%20Beginner/memo">一覧へ</a>
+</p>
 </html>

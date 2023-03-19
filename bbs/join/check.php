@@ -11,10 +11,7 @@ if(isset($_SESSION['form'])) {
 
 $form = $_SESSION['form'];
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
-	$db = new mysqli('localhost:3306', 'root', 'mtsay9918', 'min_bbs');
-	if(!$db) {
-		die($db->error);
-	}
+	$db = dbconnect();
 	$stmt = $db->prepare('insert into members (name, email, password, picture) VALUES (?, ?, ?, ?)');
 	if(!$stmt) {
 		die($db->error);

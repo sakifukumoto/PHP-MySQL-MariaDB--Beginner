@@ -32,6 +32,8 @@
 <div><pre><?php echo htmlspecialchars($memo); ?></pre></div>
 
 <p>
-  <a href="update.php?id=<?php echo $id; ?>">編集する</a> | <a href="/PHP+MySQL(MariaDB)%20Beginner/memo">一覧へ</a>
+  <a href="update.php?id=<?php echo $id; ?>">編集する</a> |
+  <a href="delate.php?id=<?php echo $id; ?>">削除する</a> |
+  <a href="/PHP+MySQL(MariaDB)%20Beginner/memo">一覧へ</a>
 </p>
 </html>

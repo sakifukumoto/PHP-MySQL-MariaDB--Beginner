@@ -1,4 +1,5 @@
 <?php
+session_start();
 require('library.php');
 
 $error = [];
@@ -30,6 +31,11 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if(password_verify($password, $hash)) {
       //ログイン成功
+      session_regenerate_id();
+      $_SESSION['id'] = $id;
+      $_SESSION['name'] = $name;
+      header('Location: index.php');
+      exit();
     } else {
       $error['login'] = 'failed';
     }

@@ -9,6 +9,30 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
   $password = filter_input(INPUT_POST, 'password', FILTER_DEFAULT);
   if($email === '' || $password === '') {
     $error['login'] = 'blank';
+  } else {
+    //ログインのチェック
+    $db = dbconnect();
+    $stmt = $db->prepare('select id, name, password from members where email=? limit 1');
+    if(!$stmt) {
+      die($db->error);
+    }
+
+    $stmt->bind_param('s', $email);
+    $success = $stmt->execute();
+    if(!$success) {
+      die($db->error);
+    }
+
+    $stmt->bind_result($id, $name, $hash);
+    $stmt->fetch();
+
+    // var_dump($hash); //ハッシュ化されたパスワードが表示される
+
+    if(password_verify($password, $hash)) {
+      //ログイン成功
+    } else {
+      $error['login'] = 'failed';
+    }
   }
 }
 ?>
@@ -38,8 +62,10 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
             <input type="text" name="email" size="35" maxlength="255" value="<?php echo h($email); ?>" />
             <?php if(isset($error['login']) && $error['login'] === 'blank'): ?>
               <p class="error">* メールアドレスとパスワードをご記入ください</p>
-              <?php endif; ?>
-            <p class="error">* ログインに失敗しました。正しくご記入ください。</p>
+            <?php endif; ?>
+            <?php if(isset($error['login']) && $error['login'] === 'failed'): ?>
+              <p class="error">* ログインに失敗しました。正しくご記入ください。</p>
+            <?php endif; ?>
           </dd>
           <dt>パスワード</dt>
           <dd>
